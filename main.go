@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"mguimara/kalashnikov/internal/appdb"
 	"os"
 	"os/signal"
 	"syscall"
@@ -11,18 +12,11 @@ import (
 	"github.com/mdp/qrterminal/v3"
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/store/sqlstore"
-	"go.mau.fi/whatsmeow/types/events"
 	waLog "go.mau.fi/whatsmeow/util/log"
 )
 
-func eventHandler(evt interface{}) {
-	switch v := evt.(type) {
-	case *events.Message:
-		fmt.Println("Received a message!", v.Message.GetConversation())
-	}
-}
-
 func main() {
+	appDB := appdb.NewAppDB()
 	dbLog := waLog.Stdout("Database", "DEBUG", true)
 	container, err := sqlstore.New("sqlite3", "file:examplestore.db?_foreign_keys=on", dbLog)
 	if err != nil {
@@ -34,7 +28,7 @@ func main() {
 	}
 	clientLog := waLog.Stdout("Client", "DEBUG", true)
 	client := whatsmeow.NewClient(deviceStore, clientLog)
-	client.AddEventHandler(eventHandler)
+	client.AddEventHandler(appDB.EventHandler)
 
 	if client.Store.ID == nil {
 		// No ID stored, new login
@@ -56,6 +50,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+
 	}
 
 	// Listen to Ctrl+C (you can also do something else that prevents the program from exiting)
