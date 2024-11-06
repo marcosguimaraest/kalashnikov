@@ -1,6 +1,6 @@
 # kalashnikov
 
-## Bot de HelpDesk para WhatsApp
+## Bot de HelpDesk para WhatsApp que faz integração com o Trello
 
 Esté um bot em desenvolvimento com o objetivo de receber chamados, publicar avisos e guardar informações.
 
