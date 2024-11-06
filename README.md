@@ -26,11 +26,11 @@ Esté um bot em desenvolvimento com o objetivo de receber chamados, publicar avi
 2. Baixar dependências
    
     ```bash
-    git get .
+    go get .
     ```
 
 3. Seja feliz
 
     ```bash
-    git run .
+    go run .
     ```
