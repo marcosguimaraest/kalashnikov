@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"mguimara/kalashnikov/internal/helpers"
 	"mguimara/kalashnikov/internal/models"
 
 	"go.mau.fi/whatsmeow/types/events"
@@ -62,10 +63,13 @@ func (appDB *AppDB) GetUser(number string) (models.User, error) {
 func (appDB *AppDB) InsertUser(u models.User) error {
 	stmt := "INSERT INTO users (number, name) VALUES (\"" + u.NumberID + "\", \"" + u.Name + "\")"
 	fmt.Println(stmt)
-	_, errn := appDB.DB.Query(stmt)
+	rows, errn := appDB.DB.Query(stmt)
 	if errn != nil {
 		fmt.Println("\n\n\n ERROR! - ", errn)
 		return (errn)
+	}
+	if rows.Next() {
+		fmt.Println("\n\nADCIONOU\n\n")
 	}
 	return (errn)
 }
@@ -73,8 +77,13 @@ func (appDB *AppDB) InsertUser(u models.User) error {
 func (appDB *AppDB) EventHandler(evt interface{}) {
 	switch v := evt.(type) {
 	case *events.Message:
+		err := appDB.InsertUser(models.User{NumberID: "5521971389720", Name: "EDEN"})
+		if err != nil {
+			fmt.Println("\n\n\nERROR - ", err)
+		}
 		u, err := appDB.GetUser(v.Info.Sender.User)
 		if err == nil {
+			helpers.Reply(v, "teste")
 			fmt.Println("\n\n\nUser - ", u)
 		} else {
 			fmt.Println("UE")
