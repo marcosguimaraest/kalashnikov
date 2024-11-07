@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"mguimara/kalashnikov/internal/appdb"
 	c "mguimara/kalashnikov/internal/client"
+	"mguimara/kalashnikov/internal/handlers"
+	"mguimara/kalashnikov/internal/input"
 	"os"
 	"os/signal"
 	"syscall"
@@ -17,7 +19,8 @@ import (
 )
 
 func main() {
-	appDB := appdb.NewAppDB()
+	input.InitializeCommands()
+	appdb.InitializeAppDatabase()
 	dbLog := waLog.Stdout("Database", "DEBUG", true)
 	container, err := sqlstore.New("sqlite3", "file:examplestore.db?_foreign_keys=on", dbLog)
 	if err != nil {
@@ -29,7 +32,7 @@ func main() {
 	}
 	clientLog := waLog.Stdout("Client", "DEBUG", true)
 	client := whatsmeow.NewClient(deviceStore, clientLog)
-	client.AddEventHandler(appDB.EventHandler)
+	client.AddEventHandler(handlers.EventHandler)
 	c.KalashnikovClient = client
 	if client.Store.ID == nil {
 		// No ID stored, new login
