@@ -2,6 +2,7 @@ package appdb
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"mguimara/kalashnikov/internal/models"
 
@@ -35,7 +36,6 @@ func (appDB *AppDB) GetAllUsers() ([]models.User, error) {
 		}
 		users = append(users, u)
 	}
-	fmt.Println("\n\n\n USER AQ! - ", users)
 	return users, nil
 }
 
@@ -47,12 +47,14 @@ func (appDB *AppDB) GetUser(number string) (models.User, error) {
 		fmt.Println("\n\n\n ERROR! - ", err)
 		return u, err
 	}
-	for rows.Next() {
+	if rows.Next() {
 		err = rows.Scan(&u.NumberID, &u.Name)
 		if err != nil {
 			fmt.Println("\n\n\n ERROR! - ", err)
 			return u, err
 		}
+	} else {
+		return u, errors.New("ERROR")
 	}
 	return u, nil
 }

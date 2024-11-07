@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"mguimara/kalashnikov/internal/appdb"
+	c "mguimara/kalashnikov/internal/client"
 	"os"
 	"os/signal"
 	"syscall"
@@ -29,7 +30,7 @@ func main() {
 	clientLog := waLog.Stdout("Client", "DEBUG", true)
 	client := whatsmeow.NewClient(deviceStore, clientLog)
 	client.AddEventHandler(appDB.EventHandler)
-
+	c.KalashnikovClient = client
 	if client.Store.ID == nil {
 		// No ID stored, new login
 		qrChan, _ := client.GetQRChannel(context.Background())
