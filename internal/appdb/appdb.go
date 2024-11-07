@@ -77,13 +77,13 @@ func (appDB *AppDB) InsertUser(u models.User) error {
 func (appDB *AppDB) EventHandler(evt interface{}) {
 	switch v := evt.(type) {
 	case *events.Message:
-		err := appDB.InsertUser(models.User{NumberID: "5521971389720", Name: "EDEN"})
+		err := appDB.InsertUser(models.User{NumberID: "5521992934590", Name: "REINALDO LEAL"})
 		if err != nil {
 			fmt.Println("\n\n\nERROR - ", err)
 		}
 		u, err := appDB.GetUser(v.Info.Sender.User)
-		if err == nil {
-			helpers.Reply(v, "teste")
+		if err == nil && !v.Info.IsGroup {
+			helpers.Reply(v, "A equipe do TI está armada com uma kalashnikov e estamos verificando!")
 			fmt.Println("\n\n\nUser - ", u)
 		} else {
 			fmt.Println("UE")
