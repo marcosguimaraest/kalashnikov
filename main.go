@@ -7,6 +7,7 @@ import (
 	c "mguimara/kalashnikov/internal/client"
 	"mguimara/kalashnikov/internal/handlers"
 	"mguimara/kalashnikov/internal/input"
+	"mguimara/kalashnikov/internal/trello"
 	"os"
 	"os/signal"
 	"syscall"
@@ -19,6 +20,8 @@ import (
 )
 
 func main() {
+	trello.InitializeApi()
+	fmt.Println("\n\n", trello.UriApi, trello.ApiKey, trello.ApiToken, "\n\n\n")
 	input.InitializeCommands()
 	appdb.InitializeAppDatabase()
 	dbLog := waLog.Stdout("Database", "DEBUG", true)
