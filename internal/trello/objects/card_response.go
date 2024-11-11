@@ -1,7 +1,7 @@
 package objects
 
-type Card struct {
-	Name   string `json:"name"`
+type CardResponse struct {
+	ID     string `json:"id"`
 	Desc   string `json:"desc"`
 	IDList string `json:"idList"`
 }

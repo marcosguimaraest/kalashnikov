@@ -11,6 +11,7 @@ var ApiKey string
 var ApiToken string
 var ApiIDDefaultList string
 var APiIDDefaultBoard string
+var APIEndpoint string
 
 func InitializeApi() {
 	godotenv.Load("secrets.env")
@@ -19,4 +20,5 @@ func InitializeApi() {
 	ApiToken = os.Getenv("TRELLOAPITOKEN")
 	APiIDDefaultBoard = os.Getenv("APIIDDEFAULTBOARD")
 	ApiIDDefaultList = os.Getenv("APIIDDEFAULTLIST")
+	APIEndpoint = "?key=" + ApiKey + "&token=" + ApiToken
 }

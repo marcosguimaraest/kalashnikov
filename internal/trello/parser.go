@@ -1,6 +1,9 @@
 package trello
 
-import "mguimara/kalashnikov/internal/trello/objects"
+import (
+	"mguimara/kalashnikov/internal/trello/api"
+	"mguimara/kalashnikov/internal/trello/objects"
+)
 
 func ParseWhatsappInputToCard(a []string) objects.Card {
 	var c objects.Card
@@ -9,6 +12,6 @@ func ParseWhatsappInputToCard(a []string) objects.Card {
 	for _, v := range a {
 		c.Desc += v
 	}
-	c.IDList = ApiIDDefaultList
+	c.IDList = api.ApiIDDefaultList
 	return (c)
 }
