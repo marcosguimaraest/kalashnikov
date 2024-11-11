@@ -6,28 +6,13 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"strings"
-
-	"github.com/joho/godotenv"
 )
-
-var UriApi string
-var ApiKey string
-var ApiToken string
-
-func InitializeApi() {
-	godotenv.Load("secrets.env")
-	UriApi = os.Getenv("TRELLOAPIURL")
-	ApiKey = os.Getenv("TRELLOAPIKEY")
-	ApiToken = os.Getenv("TRELLOAPITOKEN")
-}
 
 func setDefaultHeaders(req *http.Request) {
 	req.Header.Add("accept", "application/json")
 	req.Header.Add("Content-type", "application/json")
-	req.Header.Add("User-Agent", "pix-challenge/0.0.0-alpha")
-	req.Header.Add("access_token", ApiKey)
+	req.Header.Add("User-Agent", "kalashnikov/0.0.0-alpha")
 }
 
 func GetDefaultRequest(method string, body []byte, endpoint string) (*http.Request, error) {
